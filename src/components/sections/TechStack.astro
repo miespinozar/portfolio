@@ -1,0 +1,41 @@
+---
+import SectionTitle from "@/components/ui/SectionTitle.astro";
+import TechCard from "@/components/ui/TechCard.astro";
+
+interface Props {
+  line?: "left" | "right";
+}
+
+const { line = "left" } = Astro.props;
+
+const techs = [
+  { name: "Java", icon: "☕" },
+  { name: "Spring Boot", icon: "🌱" },
+  { name: "TypeScript", icon: "🟦" },
+  { name: "Astro", icon: "🚀" },
+  { name: "TailwindCSS", icon: "💨" },
+  { name: "Vue.js", icon: "🟩" },
+  { name: "Postman", icon: "📮" },
+  { name: "Cypress", icon: "🧪" },
+  { name: "Git / GitHub", icon: "🐙" },
+  { name: "Jira", icon: "📌" },
+];
+---
+
+<section class="mt-12 max-w-5xl mx-auto">
+  <!-- Título dinámico -->
+  <SectionTitle title="Stack Tecnológico" line={line} />
+
+  <!-- Descripción -->
+  <p class="text-gray-400 mt-4 mb-10 leading-relaxed">
+    Herramientas y tecnologías que utilizo para construir aplicaciones modernas,
+    limpias y mantenibles.
+  </p>
+
+  <!-- Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+    {techs.map((tech) => (
+      <TechCard name={tech.name} icon={tech.icon} />
+    ))}
+  </div>
+</section>

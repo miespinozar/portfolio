@@ -1,0 +1,28 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Navbar from "@/layouts/Navbar.astro";
+import AboutHero from "@/components/sections/AboutHero.astro";
+import Experience from "@/components/sections/Experience.astro";
+import Services from "@/components/sections/Services.astro";
+import TechStack from "@/components/sections/TechStack.astro";
+
+// Las barras de los títulos alternan izquierda/derecha para formar un zigzag.
+---
+
+<BaseLayout>
+  <Navbar />
+
+  <main class="max-w-6xl mx-auto px-6 pt-52 pb-32 space-y-32">
+    <!-- Este es el about me -->
+    <AboutHero />
+
+    <!-- Estas son mis experiencias -->
+    <Experience line="left" />
+
+    <!-- Esto es el enfoque que he tenido -->
+    <Services line="right" />
+
+    <!-- Este es mi stack tecnológico -->
+    <TechStack line="left" />
+  </main>
+</BaseLayout>

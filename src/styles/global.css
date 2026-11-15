@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* Efectos propios del portafolio (Tailwind no los trae). */
+
+.text-glow {
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.8);
+}
+
+.shadow-neon {
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+}

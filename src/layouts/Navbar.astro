@@ -1,0 +1,35 @@
+---
+// Links del menú: para agregar uno, suma un objeto aquí.
+const links = [
+  { href: "/about", label: "Sobre mí" },
+  { href: "/projects", label: "Proyectos" },
+  { href: "/contact", label: "Contáctame" },
+];
+---
+
+<nav class="bg-[#0f0f14] fixed top-0 left-0 w-full z-50">
+  <div class="max-w-6xl mx-auto px-8 py-4 flex items-center justify-between">
+    <!-- Nombre -->
+    <a href="/" class="text-white font-semibold text-lg">
+      <span class="text-gray-200 font-bold text-lg">
+        Matías Espinoza
+      </span>
+    </a>
+
+    <!-- Links -->
+    <div class="flex gap-8 items-center text-sm">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class="relative text-gray-200 whitespace-nowrap
+                 after:absolute after:left-1/2 after:-bottom-1
+                 after:h-[2px] after:w-0 after:bg-[#a78bfa]
+                 after:transition-all after:duration-300
+                 hover:after:w-full hover:after:left-0"
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>

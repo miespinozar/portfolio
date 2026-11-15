@@ -1,0 +1,30 @@
+---
+// Título de sección con una barra degradada al lado.
+// `line` dice hacia dónde va la barra: alternarlo entre secciones arma el zigzag.
+interface Props {
+  title: string;
+  line?: "left" | "right";
+}
+
+const { title, line = "left" } = Astro.props;
+---
+
+<header
+  class={`flex items-center gap-6 mb-12 ${
+    line === "right" ? "flex-row-reverse text-right" : ""
+  }`}
+>
+  <!-- Título -->
+  <h2 class="text-4xl md:text-5xl font-bold text-white text-glow whitespace-nowrap">
+    {title}
+  </h2>
+
+  <!-- Línea decorativa dinámica -->
+  <div
+    class={`flex-1 h-[4px] rounded-full shadow-neon ${
+      line === "right"
+        ? "bg-gradient-to-l from-purple-500 to-cyan-400"
+        : "bg-gradient-to-r from-purple-500 to-cyan-400"
+    }`}
+  ></div>
+</header>

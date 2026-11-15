@@ -1,0 +1,26 @@
+---
+// Tarjeta base que comparten ServiceCard y TechCard.
+// Aquí van los efectos comunes; el borde, el relleno y el layout
+// los pone cada tarjeta con `class`.
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    `rounded-2xl
+     border
+     bg-white/5 shadow-md
+     transform-gpu will-change-transform
+     transition-all duration-300 ease-out
+     hover:bg-white/10
+     hover:shadow-lg hover:shadow-purple-500/20
+     hover:-translate-y-1`,
+    className,
+  ]}
+>
+  <slot />
+</div>
