@@ -7,7 +7,7 @@ const tabs = [
   {
     id: "exp1",
     title: "Consultor SAP N1",
-    subtitle: "2023 Septiembre – 2025 Enero · Lion Consulting SPA",
+    subtitle: "2023 Septiembre – 2025 Marzo · Lion Consulting SPA",
     role: "Desarrollador Nivel 1",
     items: [
       "Desarrollo de aplicaciones SAP Fiori / SAPUI5 para el cliente Credinissan, enfocadas en interfaces modernas y usabilidad interna.",
@@ -17,6 +17,7 @@ const tabs = [
       "Soporte técnico a usuarios y clientes mediante Zoho Helpdesk, gestionando requerimientos y tickets.",
       "Trabajo bajo metodología ágil Scrum, participando en planificación y entregas iterativas.",
     ],
+    tags: ["SAP Fiori", "SAP CPI", "Selenium", "Cypress", "Scrum"],
   },
   {
     id: "exp2",
@@ -30,6 +31,7 @@ const tabs = [
       "Desarrollo backend con Java, Spring Boot y Apache Camel.",
       "Trabajo bajo metodología ágil Kanban utilizando Jira para gestión de tareas.",
     ],
+    tags: ["Java", "Spring Boot", "Apache Camel", "JUnit", "Kanban"],
   },
   {
     id: "exp3",
@@ -41,6 +43,7 @@ const tabs = [
       "Arquitectura frontend moderna y escalable.",
       "Aprendizaje continuo de tecnologías actuales.",
     ],
+    tags: [],
   },
 ];
 
@@ -93,6 +96,25 @@ const active = computed(() => tabs.find((t) => t.id === activeId.value)!);
               <span>{{ item }}</span>
             </li>
           </ul>
+
+          <!-- Etiquetas -->
+          <div
+            v-if="active.tags.length"
+            class="flex flex-wrap gap-2"
+          >
+            <span
+              v-for="tag in active.tags"
+              :key="tag"
+              class="px-3 py-1
+                     rounded-full
+                     text-xs font-semibold
+                     text-purple-300
+                     bg-purple-500/15
+                     border border-purple-500/35"
+            >
+              {{ tag }}
+            </span>
+          </div>
         </div>
       </transition>
     </div>
