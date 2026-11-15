@@ -1,0 +1,21 @@
+---
+import SocialIcons from "@/components/ui/SocialIcons.astro";
+
+// El año se calcula al compilar, así que se actualiza solo en cada build.
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-white/10 mt-24">
+  <div
+    class="max-w-6xl mx-auto px-8 py-8
+           flex flex-col sm:flex-row items-center justify-between gap-4"
+  >
+    <!-- Nombre -->
+    <span class="text-sm text-gray-400">
+      © {year} Matías Ignacio Espinoza Rojas
+    </span>
+
+    <!-- Redes -->
+    <SocialIcons />
+  </div>
+</footer>
