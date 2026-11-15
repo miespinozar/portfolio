@@ -152,8 +152,31 @@ Pendientes:
 
 ## 6. Contexto para Claude Code
 
-Claude Code guarda su memoria en cada computadora, así que en la otra PC no sabe nada de
-esto. Al empezar, dile: **"lee OTRA-PC.md del portfolio"**. Esto es lo que necesita saber:
+Claude Code guarda su memoria en cada computadora. La del Fedora está en el repo **privado**
+https://github.com/miespinozar/claude-memoria, y ese repo es la propia carpeta de memoria.
+
+### Traer la memoria a la otra PC
+
+1. Abre Claude Code una vez desde tu carpeta de usuario (`cd $HOME` y luego `claude`) y
+   ciérralo. Así se crea `$HOME\.claude\projects\<carpeta>`, donde `<carpeta>` es tu ruta
+   escrita con guiones, por ejemplo `C--Users-Matias`.
+2. Clona el repo dentro, como carpeta `memory`:
+
+   ```powershell
+   cd $HOME\.claude\projects\C--Users-Matias
+   gh repo clone miespinozar/claude-memoria memory
+   ```
+
+   Si `memory` ya existe, renómbrala antes, por ejemplo a `memory-vieja`.
+3. Mantenla sincronizada:
+   - Al empezar el día: `git -C memory pull`.
+   - Al terminar: `git -C memory add -A`, luego
+     `git -C memory commit -m "Memoria al día"` y `git -C memory push`.
+
+   Haz lo mismo en el Fedora, desde `~/.claude/projects/-home-matias/memory`.
+
+Si no puedes traer la memoria, al empezar dile a Claude: **"lee OTRA-PC.md del portfolio"**.
+Esto es lo que necesita saber:
 
 - **Estilo de código:**
   - Expandido y comentado. Las clases de Tailwind van en varias líneas, agrupadas por
