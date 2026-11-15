@@ -9,3 +9,36 @@
 .shadow-neon {
   box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
 }
+
+/* Carrusel de tecnologías: avanza solo y se pausa con el mouse encima. */
+
+.tech-strip {
+  /* Los bordes se desvanecen en vez de cortar las tarjetas en seco. */
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.tech-track {
+  animation: tech-scroll 50s linear infinite;
+}
+
+.tech-strip:hover .tech-track {
+  animation-play-state: paused;
+}
+
+/* Llega justo a la mitad: ahí empieza la copia de la lista. El 10px es la mitad del gap. */
+@keyframes tech-scroll {
+  to {
+    transform: translateX(calc(-50% - 10px));
+  }
+}
+
+/* Quien pide menos movimiento en su sistema ve la lista quieta y la puede deslizar. */
+@media (prefers-reduced-motion: reduce) {
+  .tech-strip {
+    overflow-x: auto;
+  }
+
+  .tech-track {
+    animation: none;
+  }
+}

@@ -1,9 +1,10 @@
 ---
 import Card from "@/components/ui/Card.astro";
 
+// `icon` es el path SVG de Simple Icons (24×24). Sin ícono, solo se ve el nombre.
 interface Props {
   name: string;
-  icon: string;
+  icon?: string;
 }
 
 const { name, icon } = Astro.props;
@@ -11,13 +12,20 @@ const { name, icon } = Astro.props;
 
 <Card
   class={`flex items-center gap-3 px-5 py-4
+          whitespace-nowrap
           border-white/10
           hover:border-purple-400/40`}
 >
   <!-- Icono -->
-  <span class="text-2xl text-purple-300">
-    {icon}
-  </span>
+  {icon && (
+    <svg
+      viewBox="0 0 24 24"
+      class="w-6 h-6 shrink-0 fill-current text-purple-300"
+      aria-hidden="true"
+    >
+      <path d={icon} />
+    </svg>
+  )}
 
   <!-- Nombre -->
   <p class="text-gray-200 font-medium">

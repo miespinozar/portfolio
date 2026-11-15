@@ -1,6 +1,31 @@
 ---
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import TechCard from "@/components/ui/TechCard.astro";
+import {
+  siPython,
+  siOpenjdk,
+  siC,
+  siPhp,
+  siJavascript,
+  siTypescript,
+  siHtml5,
+  siCss,
+  siTailwindcss,
+  siAstro,
+  siVuedotjs,
+  siSpringboot,
+  siDjango,
+  siSap,
+  siMysql,
+  siPostgresql,
+  siSqlite,
+  siJunit5,
+  siSelenium,
+  siPostman,
+  siCypress,
+  siGit,
+  siJira,
+} from "simple-icons";
 
 interface Props {
   line?: "left" | "right";
@@ -8,18 +33,50 @@ interface Props {
 
 const { line = "left" } = Astro.props;
 
+// Los logos vienen de Simple Icons y quedan dentro del sitio al compilar.
+// Apache Camel y SQL Server no tienen logo ahí, así que van solo con el nombre.
 const techs = [
-  { name: "Java", icon: "☕" },
-  { name: "Spring Boot", icon: "🌱" },
-  { name: "TypeScript", icon: "🟦" },
-  { name: "Astro", icon: "🚀" },
-  { name: "TailwindCSS", icon: "💨" },
-  { name: "Vue.js", icon: "🟩" },
-  { name: "Postman", icon: "📮" },
-  { name: "Cypress", icon: "🧪" },
-  { name: "Git / GitHub", icon: "🐙" },
-  { name: "Jira", icon: "📌" },
+  // Lenguajes
+  { name: "Python", icon: siPython.path },
+  { name: "Java", icon: siOpenjdk.path },
+  { name: "C", icon: siC.path },
+  { name: "PHP", icon: siPhp.path },
+  { name: "JavaScript", icon: siJavascript.path },
+  { name: "TypeScript", icon: siTypescript.path },
+
+  // Frontend
+  { name: "HTML5", icon: siHtml5.path },
+  { name: "CSS3", icon: siCss.path },
+  { name: "Tailwind CSS", icon: siTailwindcss.path },
+  { name: "Astro", icon: siAstro.path },
+  { name: "Vue.js", icon: siVuedotjs.path },
+
+  // Backend e integración
+  { name: "Spring Boot", icon: siSpringboot.path },
+  { name: "Apache Camel" },
+  { name: "Django", icon: siDjango.path },
+  { name: "SAP Fiori / CPI", icon: siSap.path },
+
+  // Bases de datos
+  { name: "MySQL", icon: siMysql.path },
+  { name: "PostgreSQL", icon: siPostgresql.path },
+  { name: "SQLite", icon: siSqlite.path },
+  { name: "SQL Server" },
+
+  // Testing
+  { name: "JUnit", icon: siJunit5.path },
+  { name: "Selenium", icon: siSelenium.path },
+  { name: "Postman", icon: siPostman.path },
+  { name: "Cypress", icon: siCypress.path },
+
+  // Herramientas
+  { name: "Git / GitHub", icon: siGit.path },
+  { name: "Jira", icon: siJira.path },
 ];
+
+// La lista va dos veces seguidas: cuando la primera termina de pasar,
+// la animación vuelve al inicio sin que se note el salto.
+const loop = [...techs, ...techs];
 ---
 
 <section class="mt-12 max-w-5xl mx-auto">
@@ -32,10 +89,17 @@ const techs = [
     limpias y mantenibles.
   </p>
 
-  <!-- Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-    {techs.map((tech) => (
-      <TechCard name={tech.name} icon={tech.icon} />
-    ))}
+  <!-- Carrusel -->
+  <div class="tech-strip overflow-hidden py-2" aria-label="Tecnologías">
+    <ul class="tech-track flex gap-5 w-max">
+      {loop.map((tech, i) => (
+        <li aria-hidden={i >= techs.length ? "true" : undefined}>
+          <TechCard
+            name={tech.name}
+            icon={tech.icon}
+          />
+        </li>
+      ))}
+    </ul>
   </div>
 </section>

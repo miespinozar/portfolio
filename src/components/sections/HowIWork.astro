@@ -1,0 +1,67 @@
+---
+import SectionTitle from "@/components/ui/SectionTitle.astro";
+import ServiceCard from "@/components/ui/ServiceCard.astro";
+
+interface Props {
+  line?: "left" | "right";
+}
+
+const { line = "left" } = Astro.props;
+
+const areas = [
+  {
+    icon: "🧪",
+    title: "QA y testing",
+    description:
+      "Pruebas manuales y automatizadas con JUnit, Selenium WebDriver, Postman y Cypress, apoyadas en conocimientos de desarrollo.",
+  },
+  {
+    icon: "🔗",
+    title: "Integración y back end",
+    description:
+      "SAP Fiori, SAP CPI, Spring Boot, Apache Camel, Django y microservicios.",
+  },
+  {
+    icon: "🗄️",
+    title: "Bases de datos",
+    description:
+      "MySQL, PostgreSQL, SQLite, SQL Server y optimización de consultas SQL.",
+  },
+  {
+    icon: "🔄",
+    title: "Metodologías ágiles",
+    description:
+      "Experiencia en equipos bajo Scrum y Kanban, incluyendo la coordinación de reuniones diarias.",
+  },
+  {
+    icon: "🎧",
+    title: "Soporte a usuarios",
+    description:
+      "Gestión de incidentes y requerimientos con ServiceNow y Zoho Helpdesk.",
+  },
+  {
+    icon: "💡",
+    title: "Intereses",
+    description:
+      "Desarrollo de software, QA, ciencia de datos e inteligencia artificial.",
+  },
+];
+---
+
+<section class="mt-9 max-w-6xl mx-auto px-6">
+
+  <!-- Título dinámico -->
+  <SectionTitle title="Cómo trabajo" line={line} />
+
+  <!-- Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12 w-full">
+    {areas.map((area) => (
+      <ServiceCard
+        icon={area.icon}
+        title={area.title}
+        description={area.description}
+      />
+    ))}
+  </div>
+
+</section>
