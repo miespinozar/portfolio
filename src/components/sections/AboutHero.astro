@@ -1,4 +1,5 @@
 ---
+import VerticalLine from "@/components/ui/VerticalLine.astro";
 ---
 
 <section>
@@ -10,7 +11,7 @@
   </div>
 
   <!-- CONTENIDO ABOUT -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+  <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-16 items-center">
 
     <!-- IMAGEN -->
     <div class="flex justify-center">
@@ -20,6 +21,9 @@
         class="w-64 h-64 object-cover rounded-2xl shadow-lg"
       />
     </div>
+
+    <!-- BARRA (separa la foto del texto) -->
+    <VerticalLine />
 
     <!-- TEXTO -->
     <div class="space-y-8">
