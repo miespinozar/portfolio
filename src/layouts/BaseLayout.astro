@@ -25,7 +25,7 @@ const tituloCompleto = title
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Título y descripción: lo que muestra Google -->
     <title>{tituloCompleto}</title>
@@ -37,6 +37,17 @@ const tituloCompleto = title
     <meta property="og:site_name" content={nombre} />
     <meta property="og:title" content={tituloCompleto} />
     <meta property="og:description" content={description} />
+
+    <!-- Sin JavaScript no hay animación de aparición: todo se muestra de inmediato -->
+    <noscript>
+      <style>
+        /* !important: este estilo se carga antes que global.css y, sin eso, pierde */
+        .reveal {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
   </head>
 
   <body class="
@@ -47,5 +58,27 @@ const tituloCompleto = title
 
 
     <slot />
+
+    <script>
+      // Animación de aparición: cada elemento con la clase `reveal`
+      // se muestra la primera vez que entra en pantalla.
+      const observador = new IntersectionObserver(
+        (entradas) => {
+          entradas.forEach((entrada) => {
+            if (entrada.isIntersecting) {
+              entrada.target.classList.add("visible");
+
+              // Ya apareció: no hace falta seguir mirándolo
+              observador.unobserve(entrada.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      document.querySelectorAll(".reveal").forEach((elemento) => {
+        observador.observe(elemento);
+      });
+    </script>
   </body>
 </html>

@@ -66,15 +66,18 @@ const projects = [
     <!-- Lista de proyectos -->
     <div class="space-y-10">
       {projects.map((project) => (
-        <ProjectCard
-          name={project.name}
-          status={project.status}
-          summary={project.summary}
-          features={project.features}
-          tags={project.tags}
-          href={project.href}
-          linkLabel={project.linkLabel}
-        />
+        <div class="reveal">
+          <!-- El div lleva la animación de aparición; la tarjeta ya tiene la suya al pasar el mouse -->
+          <ProjectCard
+            name={project.name}
+            status={project.status}
+            summary={project.summary}
+            features={project.features}
+            tags={project.tags}
+            href={project.href}
+            linkLabel={project.linkLabel}
+          />
+        </div>
       ))}
     </div>
   </main>
