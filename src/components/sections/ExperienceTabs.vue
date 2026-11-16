@@ -7,7 +7,7 @@ const tabs = [
   {
     id: "exp1",
     title: "Consultor SAP N1",
-    subtitle: "2023 Septiembre – 2025 Marzo · Lion Consulting SPA",
+    subtitle: "2023 Septiembre – 2025 Marzo · Lion Consulting SPA · Santiago",
     role: "Desarrollador Nivel 1",
     items: [
       "Desarrollo de aplicaciones SAP Fiori / SAPUI5 para el cliente Credinissan, enfocadas en interfaces modernas y usabilidad interna.",
@@ -22,7 +22,7 @@ const tabs = [
   {
     id: "exp2",
     title: "Backend Trainee",
-    subtitle: "2022 Mayo – 2023 Agosto · Socius Chile SPA",
+    subtitle: "2022 Mayo – 2023 Agosto · Socius Chile SPA · Santiago",
     role: "Desarrollador Backend Trainee",
     items: [
       "Implementación de microservicios para integración entre sistemas mediante APIs REST.",
