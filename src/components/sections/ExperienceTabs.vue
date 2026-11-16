@@ -35,6 +35,29 @@ const tabs = [
   },
   {
     id: "exp3",
+    title: "Práctica en Enel X",
+    subtitle: "2022 Enero – 2022 Abril · Enel X Chile SPA · Santiago",
+    role: "Consultant Responsible Junior (práctica profesional)",
+    items: [
+      "Soporte a usuarios mediante gestión de incidentes en ServiceNow.",
+      "Coordinación de reuniones diarias del equipo bajo metodología Kanban.",
+    ],
+    tags: ["ServiceNow", "Kanban"],
+  },
+  {
+    id: "exp4",
+    title: "Práctica en Puma",
+    subtitle: "2020 Enero – 2020 Marzo · Puma Chile S.A. · Santiago",
+    role: "IT Trainee Helpdesk (práctica profesional)",
+    items: [
+      "Optimización de consultas SQL en e-commerce sobre SQL Server.",
+      "Soporte técnico a usuarios y gestión de tickets.",
+      "Automatización del envío de facturas mediante scripts.",
+    ],
+    tags: ["SQL Server", "Scripts", "Soporte"],
+  },
+  {
+    id: "exp5",
     title: "Formación",
     subtitle: "Aprendizaje continuo",
     role: "Crecimiento profesional",
