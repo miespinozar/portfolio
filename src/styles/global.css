@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Tipografía Onest: viene del paquete npm y queda dentro del sitio al compilar, sin CDN. */
+@import "@fontsource-variable/onest";
+
+@theme {
+  --font-sans: "Onest Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
 /* Efectos propios del portafolio (Tailwind no los trae). */
 
 .text-glow {
