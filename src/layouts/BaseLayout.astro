@@ -1,5 +1,24 @@
 ---
 import "../styles/global.css";
+
+// Cada página puede pasar su propio título y descripción.
+// Si no pasa nada, se usan los de abajo.
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const nombre = "Matías Espinoza";
+
+const {
+  title,
+  description = "Portafolio de Matías Espinoza, Ingeniero Civil en Informática y desarrollador: experiencia, educación, tecnologías y contacto.",
+} = Astro.props;
+
+// Pestaña del navegador: "Sobre mí | Matías Espinoza", o solo el nombre en el inicio.
+const tituloCompleto = title
+  ? `${title} | ${nombre}`
+  : `${nombre} | Ingeniero Civil en Informática y Desarrollador`;
 ---
 
 <!DOCTYPE html>
@@ -7,7 +26,17 @@ import "../styles/global.css";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Matías Espinoza</title>
+
+    <!-- Título y descripción: lo que muestra Google -->
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={description} />
+
+    <!-- Vista previa al compartir el link (LinkedIn, WhatsApp) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CL" />
+    <meta property="og:site_name" content={nombre} />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={description} />
   </head>
 
   <body class="

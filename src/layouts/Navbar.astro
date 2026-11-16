@@ -1,5 +1,6 @@
 ---
 // Links del menú: para agregar uno, suma un objeto aquí.
+// Se usan dos veces: en la barra (pantallas grandes) y en el menú del celular.
 const links = [
   { href: "/about", label: "Sobre mí" },
   { href: "/projects", label: "Proyectos" },
@@ -8,16 +9,17 @@ const links = [
 ---
 
 <nav class="bg-[#0f0f14] fixed top-0 left-0 w-full z-50">
+  <!-- Barra -->
   <div class="max-w-6xl mx-auto px-8 py-4 flex items-center justify-between">
     <!-- Nombre -->
-    <a href="/" class="text-white font-semibold text-lg">
+    <a href="/" class="text-white font-semibold text-lg whitespace-nowrap">
       <span class="text-gray-200 font-bold text-lg">
         Matías Espinoza
       </span>
     </a>
 
-    <!-- Links -->
-    <div class="flex gap-8 items-center text-sm">
+    <!-- Links (pantallas grandes) -->
+    <div class="hidden md:flex gap-8 items-center text-sm">
       {links.map((link) => (
         <a
           href={link.href}
@@ -31,5 +33,108 @@ const links = [
         </a>
       ))}
     </div>
+
+    <!-- Botón del menú (celular) -->
+    <button
+      id="menu-boton"
+      type="button"
+      aria-label="Abrir menú"
+      aria-controls="menu-movil"
+      aria-expanded="false"
+      class="md:hidden
+             -mr-2 p-2 rounded-lg
+             text-gray-200
+             hover:bg-white/10
+             focus-visible:outline-2 focus-visible:outline-[#a78bfa]"
+    >
+      <!-- Icono: tres líneas (menú cerrado) -->
+      <svg
+        id="menu-icono-abrir"
+        class="w-6 h-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <path d="M4 7h16" />
+        <path d="M4 12h16" />
+        <path d="M4 17h16" />
+      </svg>
+
+      <!-- Icono: equis (menú abierto) -->
+      <svg
+        id="menu-icono-cerrar"
+        class="w-6 h-6 hidden"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <path d="M6 6l12 12" />
+        <path d="M18 6L6 18" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Menú desplegable (celular): parte oculto y el botón lo muestra -->
+  <div
+    id="menu-movil"
+    class="hidden md:hidden
+           border-t border-white/10
+           px-8 py-2"
+  >
+    {links.map((link) => (
+      <a
+        href={link.href}
+        class="block
+               py-3
+               text-gray-200
+               hover:text-[#a78bfa]"
+      >
+        {link.label}
+      </a>
+    ))}
   </div>
 </nav>
+
+<script>
+  // Abre y cierra el menú del celular.
+  const boton = document.getElementById("menu-boton");
+  const menu = document.getElementById("menu-movil");
+  const iconoAbrir = document.getElementById("menu-icono-abrir");
+  const iconoCerrar = document.getElementById("menu-icono-cerrar");
+
+  function mostrarMenu(abierto: boolean) {
+    if (!boton || !menu || !iconoAbrir || !iconoCerrar) {
+      return;
+    }
+
+    // Menú
+    menu.classList.toggle("hidden", !abierto);
+
+    // Iconos: se muestra uno u otro
+    iconoAbrir.classList.toggle("hidden", abierto);
+    iconoCerrar.classList.toggle("hidden", !abierto);
+
+    // Lectores de pantalla
+    boton.setAttribute("aria-expanded", String(abierto));
+    boton.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
+  }
+
+  // Clic en el botón: cambia entre abierto y cerrado
+  boton?.addEventListener("click", () => {
+    const estaAbierto = boton.getAttribute("aria-expanded") === "true";
+    mostrarMenu(!estaAbierto);
+  });
+
+  // Tecla Escape: cierra el menú
+  document.addEventListener("keydown", (evento) => {
+    if (evento.key === "Escape") {
+      mostrarMenu(false);
+    }
+  });
+</script>
