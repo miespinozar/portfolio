@@ -4,14 +4,15 @@ import Button from "@/components/ui/Button.astro";
 
 // Tarjeta de un proyecto: nombre, estado, resumen, puntos destacados,
 // tecnologías y un botón hacia el repositorio.
+// `href` y `linkLabel` son opcionales: sin ellos, la tarjeta no muestra botón.
 interface Props {
   name: string;
   status: string;
   summary: string;
   features: string[];
   tags: string[];
-  href: string;
-  linkLabel: string;
+  href?: string;
+  linkLabel?: string;
 }
 
 const { name, status, summary, features, tags, href, linkLabel } = Astro.props;
@@ -58,7 +59,7 @@ const { name, status, summary, features, tags, href, linkLabel } = Astro.props;
   </ul>
 
   <!-- Tecnologías -->
-  <div class="flex flex-wrap gap-2 mb-8">
+  <div class="flex flex-wrap gap-2">
     {tags.map((tag) => (
       <span
         class="px-3 py-1
@@ -73,8 +74,12 @@ const { name, status, summary, features, tags, href, linkLabel } = Astro.props;
     ))}
   </div>
 
-  <!-- Botón al repositorio -->
-  <Button href={href} newTab>
-    {linkLabel}
-  </Button>
+  <!-- Botón al repositorio (solo si el proyecto tiene link) -->
+  {href && (
+    <div class="mt-8">
+      <Button href={href} newTab>
+        {linkLabel}
+      </Button>
+    </div>
+  )}
 </Card>

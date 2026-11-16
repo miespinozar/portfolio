@@ -9,26 +9,33 @@ interface Props {
 const { line = "left" } = Astro.props;
 
 // `meta` es la institución (y la fecha si la hay); va arriba, en chico.
+// `href` y `linkLabel` son el enlace al certificado; se abre en otra pestaña.
 const education = [
   {
     meta: "Universidad Andrés Bello",
     title: "Ingeniería Civil en Informática",
     text: "Titulado con distinción Cum Laude.",
+    href: "https://certificados.unab.cl/index.php/tyg/descargar/27137",
+    linkLabel: "Ver título",
   },
   {
     meta: "IBM · Credly",
     title: "IBM Data Science",
     text: "Certificación profesional.",
+    href: "https://www.credly.com/badges/59242435-c682-482f-b3de-fe9aab57fb57/print",
+    linkLabel: "Ver credencial",
   },
   {
     meta: "EF SET · Abril 2026",
     title: "Inglés C2 Proficiente",
     text: "Lectura C1, comprensión auditiva C2. Español nativo.",
+    href: "https://cert.efset.org/es/NPgaMX",
+    linkLabel: "Ver certificado",
   },
 ];
 ---
 
-<section class="mt-9 max-w-6xl mx-auto md:px-6">
+<section class="reveal mt-9 max-w-6xl mx-auto md:px-6">
 
   <!-- Título dinámico -->
   <SectionTitle title="Educación" line={line} />
@@ -55,6 +62,19 @@ const education = [
         <p class="text-gray-300 leading-relaxed text-sm">
           {item.text}
         </p>
+
+        <!-- Enlace al certificado -->
+        <a
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block mt-5
+                 text-sm font-semibold
+                 text-purple-300
+                 hover:text-purple-400 hover:underline"
+        >
+          {item.linkLabel} →
+        </a>
       </Card>
     ))}
   </div>

@@ -6,9 +6,9 @@ import { computed, ref } from "vue";
 const tabs = [
   {
     id: "exp1",
-    title: "Consultor SAP N1",
-    subtitle: "2023 Septiembre – 2025 Marzo · Lion Consulting SPA",
-    role: "Desarrollador Nivel 1",
+    title: "Desarrollador SAP Fiori nivel 1",
+    subtitle: "2023 Septiembre – 2025 Marzo · Lion Consulting SPA · Santiago",
+    role: "Desarrollador SAP Fiori nivel 1",
     items: [
       "Desarrollo de aplicaciones SAP Fiori / SAPUI5 para el cliente Credinissan, enfocadas en interfaces modernas y usabilidad interna.",
       "Mantenedor de cotizaciones para facilitar el uso a la mesa de ayuda.",
@@ -22,7 +22,7 @@ const tabs = [
   {
     id: "exp2",
     title: "Backend Trainee",
-    subtitle: "2022 Mayo – 2023 Agosto · Socius Chile SPA",
+    subtitle: "2022 Mayo – 2023 Agosto · Socius Chile SPA · Santiago",
     role: "Desarrollador Backend Trainee",
     items: [
       "Implementación de microservicios para integración entre sistemas mediante APIs REST.",
@@ -35,6 +35,29 @@ const tabs = [
   },
   {
     id: "exp3",
+    title: "Práctica en Enel X",
+    subtitle: "2022 Enero – 2022 Abril · Enel X Chile SPA · Santiago",
+    role: "Consultant Responsible Junior (práctica profesional)",
+    items: [
+      "Soporte a usuarios mediante gestión de incidentes en ServiceNow.",
+      "Coordinación de reuniones diarias del equipo bajo metodología Kanban.",
+    ],
+    tags: ["ServiceNow", "Kanban"],
+  },
+  {
+    id: "exp4",
+    title: "Práctica en Puma",
+    subtitle: "2020 Enero – 2020 Marzo · Puma Chile S.A. · Santiago",
+    role: "IT Trainee Helpdesk (práctica profesional)",
+    items: [
+      "Optimización de consultas SQL en e-commerce sobre SQL Server.",
+      "Soporte técnico a usuarios y gestión de tickets.",
+      "Automatización del envío de facturas mediante scripts.",
+    ],
+    tags: ["SQL Server", "Scripts", "Soporte"],
+  },
+  {
+    id: "exp5",
     title: "Formación",
     subtitle: "Aprendizaje continuo",
     role: "Crecimiento profesional",

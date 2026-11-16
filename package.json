@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/vue": "^5.1.4",
+    "@fontsource-variable/onest": "^5.3.1",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.15",
     "simple-icons": "^16.38.0",

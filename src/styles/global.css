@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Tipografía Onest: viene del paquete npm y queda dentro del sitio al compilar, sin CDN. */
+@import "@fontsource-variable/onest";
+
+@theme {
+  --font-sans: "Onest Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
 /* Efectos propios del portafolio (Tailwind no los trae). */
 
 .text-glow {
@@ -8,6 +15,20 @@
 
 .shadow-neon {
   box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+}
+
+/* Animación de aparición: las secciones con la clase `reveal` parten ocultas
+   y un poco más abajo; BaseLayout les pone `visible` cuando entran en pantalla. */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
 }
 
 /* Carrusel de tecnologías: avanza solo y se pausa con el mouse encima. */
@@ -40,5 +61,12 @@
 
   .tech-track {
     animation: none;
+  }
+
+  /* Sin animación de aparición: todo se ve desde el principio. */
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
