@@ -10,12 +10,12 @@ const { title, line = "left" } = Astro.props;
 ---
 
 <header
-  class={`flex items-center gap-6 mb-12 ${
+  class={`flex items-center gap-4 sm:gap-6 mb-12 ${
     line === "right" ? "flex-row-reverse text-right" : ""
   }`}
 >
   <!-- Título -->
-  <h2 class="text-4xl md:text-5xl font-bold text-white text-glow whitespace-nowrap">
+  <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-glow sm:whitespace-nowrap">
     {title}
   </h2>
 

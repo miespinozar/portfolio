@@ -90,7 +90,7 @@ const active = computed(() => tabs.find((t) => t.id === activeId.value)!);
             <li
               v-for="(item, i) in active.items"
               :key="i"
-              class="text-gray-300 flex gap-2 leading-relaxed text-justify"
+              class="text-gray-300 flex gap-2 leading-relaxed text-left md:text-justify"
             >
               <span class="text-purple-400 leading-relaxed">•</span>
               <span>{{ item }}</span>
