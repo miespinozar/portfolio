@@ -6,6 +6,10 @@ const links = [
   { href: "/projects", label: "Proyectos" },
   { href: "/contact", label: "Contáctame" },
 ];
+
+// Página actual, sin la barra final ("/about/" y "/about" cuentan como la misma).
+// Sirve para dejar marcado en el menú el link de la página en la que estás.
+const paginaActual = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
 <nav class="bg-[#0f0f14] fixed top-0 left-0 w-full z-50">
@@ -23,11 +27,21 @@ const links = [
       {links.map((link) => (
         <a
           href={link.href}
-          class="relative text-gray-200 whitespace-nowrap
-                 after:absolute after:left-1/2 after:-bottom-1
-                 after:h-[2px] after:w-0 after:bg-[#a78bfa]
-                 after:transition-all after:duration-300
-                 hover:after:w-full hover:after:left-0"
+          aria-current={paginaActual === link.href ? "page" : undefined}
+          class:list={[
+            `relative whitespace-nowrap
+             after:absolute after:-bottom-1
+             after:h-[2px] after:bg-[#a78bfa]
+             after:transition-all after:duration-300`,
+            paginaActual === link.href
+              ? // Página actual: color morado y la línea siempre visible
+                `text-[#a78bfa]
+                 after:left-0 after:w-full`
+              : // Las demás: la línea crece desde el centro al pasar el mouse
+                `text-gray-200
+                 after:left-1/2 after:w-0
+                 hover:after:w-full hover:after:left-0`,
+          ]}
         >
           {link.label}
         </a>
@@ -90,10 +104,16 @@ const links = [
     {links.map((link) => (
       <a
         href={link.href}
-        class="block
-               py-3
-               text-gray-200
-               hover:text-[#a78bfa]"
+        aria-current={paginaActual === link.href ? "page" : undefined}
+        class:list={[
+          `block
+           py-3
+           hover:text-[#a78bfa]`,
+          // Página actual: en morado
+          paginaActual === link.href
+            ? "text-[#a78bfa] font-semibold"
+            : "text-gray-200",
+        ]}
       >
         {link.label}
       </a>
