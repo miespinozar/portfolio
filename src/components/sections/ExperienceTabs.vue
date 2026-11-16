@@ -6,9 +6,9 @@ import { computed, ref } from "vue";
 const tabs = [
   {
     id: "exp1",
-    title: "Consultor SAP N1",
+    title: "Desarrollador SAP Fiori nivel 1",
     subtitle: "2023 Septiembre – 2025 Marzo · Lion Consulting SPA · Santiago",
-    role: "Desarrollador Nivel 1",
+    role: "Desarrollador SAP Fiori nivel 1",
     items: [
       "Desarrollo de aplicaciones SAP Fiori / SAPUI5 para el cliente Credinissan, enfocadas en interfaces modernas y usabilidad interna.",
       "Mantenedor de cotizaciones para facilitar el uso a la mesa de ayuda.",
