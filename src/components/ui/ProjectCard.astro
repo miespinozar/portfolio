@@ -1,0 +1,80 @@
+---
+import Card from "@/components/ui/Card.astro";
+import Button from "@/components/ui/Button.astro";
+
+// Tarjeta de un proyecto: nombre, estado, resumen, puntos destacados,
+// tecnologías y un botón hacia el repositorio.
+interface Props {
+  name: string;
+  status: string;
+  summary: string;
+  features: string[];
+  tags: string[];
+  href: string;
+  linkLabel: string;
+}
+
+const { name, status, summary, features, tags, href, linkLabel } = Astro.props;
+---
+
+<Card
+  class={`w-full p-8 md:p-10
+          border-purple-500/40
+          hover:border-purple-400`}
+>
+  <!-- Encabezado: nombre y estado -->
+  <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4">
+    <!-- Nombre -->
+    <h2 class="text-2xl md:text-3xl font-bold text-white">
+      {name}
+    </h2>
+
+    <!-- Estado -->
+    <span
+      class="px-3 py-1
+             rounded-full
+             text-xs font-semibold
+             text-cyan-300
+             bg-cyan-500/10
+             border border-cyan-400/30"
+    >
+      {status}
+    </span>
+  </div>
+
+  <!-- Resumen -->
+  <p class="text-gray-300 leading-relaxed mb-6">
+    {summary}
+  </p>
+
+  <!-- Puntos destacados -->
+  <ul class="space-y-2 mb-6">
+    {features.map((feature) => (
+      <li class="text-gray-300 flex gap-2 leading-relaxed">
+        <span class="text-purple-400" aria-hidden="true">•</span>
+        <span>{feature}</span>
+      </li>
+    ))}
+  </ul>
+
+  <!-- Tecnologías -->
+  <div class="flex flex-wrap gap-2 mb-8">
+    {tags.map((tag) => (
+      <span
+        class="px-3 py-1
+               rounded-full
+               text-xs font-semibold
+               text-purple-300
+               bg-purple-500/15
+               border border-purple-500/35"
+      >
+        {tag}
+      </span>
+    ))}
+  </div>
+
+  <!-- Botón al repositorio -->
+  <Button href={href} newTab>
+    {linkLabel}
+  </Button>
+</Card>
