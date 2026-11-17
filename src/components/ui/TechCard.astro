@@ -1,13 +1,16 @@
 ---
 import Card from "@/components/ui/Card.astro";
 
-// `icon` es el path SVG de Simple Icons (24×24). Sin ícono, solo se ve el nombre.
+// `icon` es el path SVG del logo. Sin ícono, solo se ve el nombre.
+// `viewBox` es el tamaño en que está dibujado: 24×24 en Simple Icons,
+// pero algunos logos de src/data/extra-icons.ts usan otro.
 interface Props {
   name: string;
   icon?: string;
+  viewBox?: string;
 }
 
-const { name, icon } = Astro.props;
+const { name, icon, viewBox = "0 0 24 24" } = Astro.props;
 ---
 
 <Card
@@ -19,7 +22,7 @@ const { name, icon } = Astro.props;
   <!-- Icono -->
   {icon && (
     <svg
-      viewBox="0 0 24 24"
+      viewBox={viewBox}
       class="w-6 h-6 shrink-0 fill-current text-purple-300"
       aria-hidden="true"
     >

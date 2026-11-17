@@ -17,10 +17,21 @@ import {
   siJsonwebtokens,
   siJira,
 } from "simple-icons";
+import {
+  siApacheCamel,
+  siServiceNow,
+  siSqlServer,
+  iconScrum,
+  iconKanban,
+  iconApi,
+  iconSql,
+  iconScript,
+} from "@/data/extra-icons";
 
-// Una herramienta: `icon` es el path SVG de Simple Icons (24×24).
-// Las que no tienen logo ahí (Apache Camel, ServiceNow, SQL Server, Scrum...) van solo con el nombre.
-type Tool = { name: string; icon?: string };
+// Una herramienta: `icon` es el path SVG del logo y `viewBox` el tamaño en que está dibujado
+// (24×24 si no se indica, como en Simple Icons). Los logos que no están en Simple Icons
+// vienen de src/data/extra-icons.ts.
+type Tool = { name: string; icon?: string; viewBox?: string };
 
 const tabs: {
   id: string;
@@ -53,7 +64,7 @@ const tabs: {
       { name: "Postman", icon: siPostman.path },
       { name: "Cypress", icon: siCypress.path },
       { name: "Zoho Helpdesk", icon: siZoho.path },
-      { name: "Scrum" },
+      { name: "Scrum", icon: iconScrum.path },
     ],
   },
   {
@@ -72,14 +83,14 @@ const tabs: {
       { name: "Java", icon: siOpenjdk.path },
       { name: "Spring Boot", icon: siSpringboot.path },
       { name: "Spring Data JPA", icon: siSpring.path },
-      { name: "Apache Camel" },
-      { name: "APIs REST" },
+      { name: "Apache Camel", icon: siApacheCamel.path, viewBox: siApacheCamel.viewBox },
+      { name: "APIs REST", icon: iconApi.path },
       { name: "JWT", icon: siJsonwebtokens.path },
       { name: "JUnit", icon: siJunit5.path },
       { name: "Postman", icon: siPostman.path },
       { name: "Cypress", icon: siCypress.path },
       { name: "Jira", icon: siJira.path },
-      { name: "Kanban" },
+      { name: "Kanban", icon: iconKanban.path },
     ],
   },
   {
@@ -92,8 +103,8 @@ const tabs: {
       "Coordinación de reuniones diarias del equipo bajo metodología Kanban.",
     ],
     tools: [
-      { name: "ServiceNow" },
-      { name: "Kanban" },
+      { name: "ServiceNow", icon: siServiceNow.path, viewBox: siServiceNow.viewBox },
+      { name: "Kanban", icon: iconKanban.path },
     ],
   },
   {
@@ -107,9 +118,9 @@ const tabs: {
       "Automatización del envío de facturas mediante scripts.",
     ],
     tools: [
-      { name: "SQL Server" },
-      { name: "SQL" },
-      { name: "Scripts de automatización" },
+      { name: "SQL Server", icon: siSqlServer.path, viewBox: siSqlServer.viewBox },
+      { name: "SQL", icon: iconSql.path },
+      { name: "Scripts de automatización", icon: iconScript.path },
     ],
   },
   {
@@ -230,7 +241,7 @@ const toolsDuration = computed(() => `${toolsBase.value.length * 3}s`);
                     <!-- Icono -->
                     <svg
                       v-if="tool.icon"
-                      viewBox="0 0 24 24"
+                      :viewBox="tool.viewBox ?? '0 0 24 24'"
                       class="w-5 h-5 shrink-0 fill-current text-purple-300"
                       aria-hidden="true"
                     >
