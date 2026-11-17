@@ -1,4 +1,5 @@
 ---
+import { url } from "@/utils/url";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Navbar from "@/layouts/Navbar.astro";
 import Footer from "@/layouts/Footer.astro";
@@ -31,7 +32,7 @@ const email = "matias.espinoza.rojas@gmail.com";
         Enviar un correo
       </Button>
 
-      <Button href="/CV_MatiasEspinoza.pdf" newTab>
+      <Button href={url("/CV_MatiasEspinoza.pdf")} newTab>
         Ver currículum
       </Button>
     </div>

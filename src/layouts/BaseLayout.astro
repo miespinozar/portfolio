@@ -1,4 +1,5 @@
 ---
+import { url } from "@/utils/url";
 import "../styles/global.css";
 
 // Cada página puede pasar su propio título y descripción.
@@ -19,6 +20,10 @@ const {
 const tituloCompleto = title
   ? `${title} | ${nombre}`
   : `${nombre} | Ingeniero Civil en Informática y Desarrollador`;
+
+// Dirección completa de esta página y de la imagen para compartir.
+const direccion = new URL(Astro.url.pathname, Astro.site).href;
+const imagen = new URL(url("/og-image.png"), Astro.site).href;
 ---
 
 <!DOCTYPE html>
@@ -27,8 +32,8 @@ const tituloCompleto = title
     <meta charset="utf-8" />
 
     <!-- Ícono de la pestaña: las iniciales "ME" (el .ico es para navegadores antiguos) -->
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href={url("/favicon.ico")} sizes="any" />
+    <link rel="icon" type="image/svg+xml" href={url("/favicon.svg")} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Título y descripción: lo que muestra Google -->
@@ -41,6 +46,16 @@ const tituloCompleto = title
     <meta property="og:site_name" content={nombre} />
     <meta property="og:title" content={tituloCompleto} />
     <meta property="og:description" content={description} />
+
+    <!-- Imagen y dirección de la página para esa vista previa.
+         Tienen que ser direcciones completas, por eso se arman con `site` (astro.config.mjs). -->
+    <meta property="og:url" content={direccion} />
+    <meta property="og:image" content={imagen} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Matías Espinoza, Ingeniero Civil en Informática" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href={direccion} />
 
     <!-- Sin JavaScript no hay animación de aparición: todo se muestra de inmediato -->
     <noscript>
