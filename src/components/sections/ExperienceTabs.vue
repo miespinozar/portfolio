@@ -1,37 +1,97 @@
 <script setup lang="ts">
 // Pestañas de experiencia: a la izquierda los cargos, a la derecha el detalle del elegido.
 // El título de la sección lo pone Experience.astro.
+// Los textos y las herramientas son los mismos del CV.
 import { computed, ref } from "vue";
+import {
+  siSap,
+  siJavascript,
+  siJunit5,
+  siSelenium,
+  siPostman,
+  siCypress,
+  siZoho,
+  siOpenjdk,
+  siSpringboot,
+  siSpring,
+  siJsonwebtokens,
+  siJira,
+} from "simple-icons";
+import {
+  siApacheCamel,
+  siServiceNow,
+  siSqlServer,
+  iconScrum,
+  iconKanban,
+  iconApi,
+  iconSql,
+  iconScript,
+} from "@/data/extra-icons";
 
-const tabs = [
+// Una herramienta: `icon` es el path SVG del logo y `viewBox` el tamaño en que está dibujado
+// (24×24 si no se indica, como en Simple Icons). Los logos que no están en Simple Icons
+// vienen de src/data/extra-icons.ts.
+type Tool = { name: string; icon?: string; viewBox?: string };
+
+const tabs: {
+  id: string;
+  title: string;
+  subtitle: string;
+  role: string;
+  items: string[];
+  tools: Tool[];
+}[] = [
   {
     id: "exp1",
     title: "Desarrollador SAP Fiori nivel 1",
     subtitle: "2023 Septiembre – 2025 Marzo · Lion Consulting SPA · Santiago",
     role: "Desarrollador SAP Fiori nivel 1",
     items: [
-      "Desarrollo de aplicaciones SAP Fiori / SAPUI5 para el cliente Credinissan, enfocadas en interfaces modernas y usabilidad interna.",
-      "Mantenedor de cotizaciones para facilitar el uso a la mesa de ayuda.",
-      "Ejecución de procesos de QA y testing mediante JUnit, Selenium WebDriver, Postman y Cypress.",
-      "Desarrollo de interfaces SAP CPI para integración y comunicación con la bodega central de Embonor.",
-      "Soporte técnico a usuarios y clientes mediante Zoho Helpdesk, gestionando requerimientos y tickets.",
-      "Trabajo bajo metodología ágil Scrum, participando en planificación y entregas iterativas.",
+      "Desarrollo de aplicaciones SAP Fiori / SAPUI5 para Credinissan, enfocadas en interfaces modernas y usabilidad interna.",
+      "Desarrollo de un mantenedor de cotizaciones para facilitar el trabajo de la mesa de ayuda.",
+      "Desarrollo de interfaces SAP CPI para la integración con la bodega central de Embonor.",
+      "Pruebas manuales y automatizadas con JUnit, Selenium WebDriver, Postman y Cypress.",
+      "Soporte a clientes mediante sistema de tickets en Zoho Helpdesk.",
+      "Trabajo bajo metodología Scrum, con planificación y entregas iterativas.",
     ],
-    tags: ["SAP Fiori", "SAP CPI", "Selenium", "Cypress", "Scrum"],
+    tools: [
+      { name: "SAP Fiori", icon: siSap.path },
+      { name: "SAPUI5", icon: siSap.path },
+      { name: "SAP CPI", icon: siSap.path },
+      { name: "JavaScript", icon: siJavascript.path },
+      { name: "JUnit", icon: siJunit5.path },
+      { name: "Selenium", icon: siSelenium.path },
+      { name: "Postman", icon: siPostman.path },
+      { name: "Cypress", icon: siCypress.path },
+      { name: "Zoho Helpdesk", icon: siZoho.path },
+      { name: "Scrum", icon: iconScrum.path },
+    ],
   },
   {
     id: "exp2",
-    title: "Backend Trainee",
+    title: "Back-end Trainee",
     subtitle: "2022 Mayo – 2023 Agosto · Socius Chile SPA · Santiago",
-    role: "Desarrollador Backend Trainee",
+    role: "Desarrollador Back-end Trainee",
     items: [
-      "Implementación de microservicios para integración entre sistemas mediante APIs REST.",
-      "Mantenimiento evolutivo y corrección de endpoints REST.",
-      "Ejecución de pruebas QA: unitarias y funcionales con JUnit, Postman y Cypress.",
-      "Desarrollo backend con Java, Spring Boot y Apache Camel.",
-      "Trabajo bajo metodología ágil Kanban utilizando Jira para gestión de tareas.",
+      "Desarrollo de microservicios en Java con Spring Boot y Apache Camel para la integración entre sistemas mediante APIs REST.",
+      "Persistencia de datos con JPA y autenticación de servicios mediante tokens JWT.",
+      "Mantención, corrección y actualización de endpoints REST.",
+      "Pruebas unitarias y funcionales con JUnit, Postman y Cypress.",
+      "Trabajo bajo metodología Kanban, con gestión de tareas en Jira.",
     ],
-    tags: ["Java", "Spring Boot", "Apache Camel", "JUnit", "Kanban"],
+    tools: [
+      { name: "Java", icon: siOpenjdk.path },
+      { name: "Spring Boot", icon: siSpringboot.path },
+      { name: "Spring Data JPA", icon: siSpring.path },
+      { name: "Apache Camel", icon: siApacheCamel.path, viewBox: siApacheCamel.viewBox },
+      { name: "APIs REST", icon: iconApi.path },
+      { name: "JWT", icon: siJsonwebtokens.path },
+      { name: "JUnit", icon: siJunit5.path },
+      { name: "Postman", icon: siPostman.path },
+      { name: "Cypress", icon: siCypress.path },
+      { name: "Jira", icon: siJira.path },
+      { name: "Kanban", icon: iconKanban.path },
+    ],
   },
   {
     id: "exp3",
@@ -42,7 +102,10 @@ const tabs = [
       "Soporte a usuarios mediante gestión de incidentes en ServiceNow.",
       "Coordinación de reuniones diarias del equipo bajo metodología Kanban.",
     ],
-    tags: ["ServiceNow", "Kanban"],
+    tools: [
+      { name: "ServiceNow", icon: siServiceNow.path, viewBox: siServiceNow.viewBox },
+      { name: "Kanban", icon: iconKanban.path },
+    ],
   },
   {
     id: "exp4",
@@ -50,11 +113,15 @@ const tabs = [
     subtitle: "2020 Enero – 2020 Marzo · Puma Chile S.A. · Santiago",
     role: "IT Trainee Helpdesk (práctica profesional)",
     items: [
-      "Optimización de consultas SQL en e-commerce sobre SQL Server.",
-      "Soporte técnico a usuarios y gestión de tickets.",
+      "Optimización de consultas SQL del e-commerce sobre SQL Server.",
+      "Soporte técnico a usuarios y gestión de tickets de soporte.",
       "Automatización del envío de facturas mediante scripts.",
     ],
-    tags: ["SQL Server", "Scripts", "Soporte"],
+    tools: [
+      { name: "SQL Server", icon: siSqlServer.path, viewBox: siSqlServer.viewBox },
+      { name: "SQL", icon: iconSql.path },
+      { name: "Scripts de automatización", icon: iconScript.path },
+    ],
   },
   {
     id: "exp5",
@@ -66,12 +133,34 @@ const tabs = [
       "Arquitectura frontend moderna y escalable.",
       "Aprendizaje continuo de tecnologías actuales.",
     ],
-    tags: [],
+    tools: [],
   },
 ];
 
 const activeId = ref(tabs[0].id);
 const active = computed(() => tabs.find((t) => t.id === activeId.value)!);
+
+// Carrusel de herramientas del cargo elegido.
+// La lista se repite hasta tener al menos 10 tarjetas, para que un cargo con pocas
+// herramientas igual llene el ancho. Luego va dos veces seguidas: cuando la primera
+// mitad termina de pasar, la animación vuelve al inicio sin que se note el salto.
+const toolsBase = computed(() => {
+  const tools = active.value.tools;
+  if (!tools.length) {
+    return [];
+  }
+
+  const base: Tool[] = [];
+  while (base.length < 10) {
+    base.push(...tools);
+  }
+  return base;
+});
+
+const toolsLoop = computed(() => [...toolsBase.value, ...toolsBase.value]);
+
+// Más tarjetas, más tiempo: así todas avanzan a la misma velocidad.
+const toolsDuration = computed(() => `${toolsBase.value.length * 3}s`);
 </script>
 
 <template>
@@ -95,7 +184,7 @@ const active = computed(() => tabs.find((t) => t.id === activeId.value)!);
     </div>
 
     <!-- Contenido -->
-    <div class="md:col-span-2">
+    <div class="md:col-span-2 min-w-0">
       <transition name="fade-slide" mode="out-in">
         <div :key="activeId" class="space-y-6">
           <!-- Rol -->
@@ -120,23 +209,53 @@ const active = computed(() => tabs.find((t) => t.id === activeId.value)!);
             </li>
           </ul>
 
-          <!-- Etiquetas -->
-          <div
-            v-if="active.tags.length"
-            class="flex flex-wrap gap-2"
-          >
-            <span
-              v-for="tag in active.tags"
-              :key="tag"
-              class="px-3 py-1
-                     rounded-full
-                     text-xs font-semibold
-                     text-purple-300
-                     bg-purple-500/15
-                     border border-purple-500/35"
-            >
-              {{ tag }}
-            </span>
+          <!-- Herramientas (carrusel) -->
+          <div v-if="active.tools.length" class="pt-2">
+            <!-- Título -->
+            <p class="text-sm font-semibold text-gray-400 mb-3">
+              Herramientas utilizadas
+            </p>
+
+            <!-- Carrusel: avanza solo y se pausa con el mouse encima -->
+            <div class="tech-strip overflow-hidden py-2" aria-label="Herramientas utilizadas">
+              <ul
+                class="tech-track flex gap-5 w-max"
+                :style="{ animationDuration: toolsDuration }"
+              >
+                <li
+                  v-for="(tool, i) in toolsLoop"
+                  :key="i"
+                  :aria-hidden="i >= active.tools.length ? 'true' : undefined"
+                >
+                  <!-- Tarjeta (mismo estilo que TechCard) -->
+                  <div
+                    class="flex items-center gap-3 px-4 py-3
+                           whitespace-nowrap
+                           rounded-2xl
+                           border border-white/10
+                           bg-white/5 shadow-md
+                           transition-all duration-300 ease-out
+                           hover:bg-white/10
+                           hover:border-purple-400/40"
+                  >
+                    <!-- Icono -->
+                    <svg
+                      v-if="tool.icon"
+                      :viewBox="tool.viewBox ?? '0 0 24 24'"
+                      class="w-5 h-5 shrink-0 fill-current text-purple-300"
+                      aria-hidden="true"
+                    >
+                      <path :d="tool.icon" />
+                    </svg>
+
+                    <!-- Nombre -->
+                    <span class="text-sm text-gray-200 font-medium">
+                      {{ tool.name }}
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </transition>

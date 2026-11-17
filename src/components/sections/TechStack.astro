@@ -26,6 +26,7 @@ import {
   siGit,
   siJira,
 } from "simple-icons";
+import { siApacheCamel, siSqlServer } from "@/data/extra-icons";
 
 interface Props {
   line?: "left" | "right";
@@ -34,7 +35,7 @@ interface Props {
 const { line = "left" } = Astro.props;
 
 // Los logos vienen de Simple Icons y quedan dentro del sitio al compilar.
-// Apache Camel y SQL Server no tienen logo ahí, así que van solo con el nombre.
+// Apache Camel y SQL Server no están ahí: sus logos vienen de src/data/extra-icons.ts.
 const techs = [
   // Lenguajes
   { name: "Python", icon: siPython.path },
@@ -53,7 +54,7 @@ const techs = [
 
   // Backend e integración
   { name: "Spring Boot", icon: siSpringboot.path },
-  { name: "Apache Camel" },
+  { name: "Apache Camel", icon: siApacheCamel.path, viewBox: siApacheCamel.viewBox },
   { name: "Django", icon: siDjango.path },
   { name: "SAP Fiori / CPI", icon: siSap.path },
 
@@ -61,7 +62,7 @@ const techs = [
   { name: "MySQL", icon: siMysql.path },
   { name: "PostgreSQL", icon: siPostgresql.path },
   { name: "SQLite", icon: siSqlite.path },
-  { name: "SQL Server" },
+  { name: "SQL Server", icon: siSqlServer.path, viewBox: siSqlServer.viewBox },
 
   // Testing
   { name: "JUnit", icon: siJunit5.path },
@@ -97,6 +98,7 @@ const loop = [...techs, ...techs];
           <TechCard
             name={tech.name}
             icon={tech.icon}
+            viewBox={tech.viewBox}
           />
         </li>
       ))}
