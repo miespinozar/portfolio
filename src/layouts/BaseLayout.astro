@@ -15,7 +15,7 @@ const {
   description = "Portafolio de Matías Espinoza, Ingeniero Civil en Informática y desarrollador: experiencia, educación, tecnologías y contacto.",
 } = Astro.props;
 
-// Pestaña del navegador: "Sobre mí | Matías Espinoza", o solo el nombre en el inicio.
+// Pestaña del navegador: "Sobre Matías | Matías Espinoza", o solo el nombre en el inicio.
 const tituloCompleto = title
   ? `${title} | ${nombre}`
   : `${nombre} | Ingeniero Civil en Informática y Desarrollador`;
@@ -25,6 +25,10 @@ const tituloCompleto = title
 <html lang="es">
   <head>
     <meta charset="utf-8" />
+
+    <!-- Ícono de la pestaña: las iniciales "ME" (el .ico es para navegadores antiguos) -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Título y descripción: lo que muestra Google -->
