@@ -9,12 +9,13 @@ import ProjectCard from "@/components/ui/ProjectCard.astro";
 const projects = [
   {
     name: "Nimbo",
-    status: "En desarrollo · v0.3.2",
+    status: "En desarrollo · v0.5.1",
     summary:
-      "Cliente de escritorio para nube personal, al estilo de Google Drive, conectado a OneDrive. Una sola base de código con dos ediciones: Nimbo para Windows y Nimbus para Linux.",
+      "Cliente de escritorio para OneDrive, más ligero y rápido que los clientes oficiales y con una estética propia: un dashboard glass que muestra de un vistazo cuánto espacio se usa y en qué. Una sola base de código con dos ediciones: Nimbo para Windows y Nimbus para Linux.",
     features: [
       "Inicio de sesión con Microsoft mediante OAuth con PKCE; los tokens se guardan en el llavero del sistema, nunca en el repositorio.",
-      "Subida, descarga y creación de carpetas, más sincronización en dos sentidos entre una carpeta local y OneDrive.",
+      "Carpetas sincronizadas en ambos sentidos, también en segundo plano desde la bandeja del sistema, con transferencias en paralelo y botón para detenerlas.",
+      "Modo claro u oscuro con color de acento a elección y efecto Mica en Windows 11.",
       "Instalador .msi para Windows y paquetes rpm y deb para Linux.",
       "Integración continua en GitLab: formato, clippy, pruebas, detección de secretos y auditoría de dependencias.",
     ],
@@ -74,7 +75,7 @@ const projects = [
 
 <BaseLayout
   title="Proyectos"
-  description="Proyectos de Matías Espinoza: Nimbo, un cliente de escritorio para OneDrive hecho con Tauri, Vue y Rust, este portafolio y proyectos académicos con Django."
+  description="Proyectos de Matías Espinoza: Nimbo, un cliente de escritorio para OneDrive más ligero que el oficial, hecho con Tauri, Vue y Rust, este portafolio y proyectos académicos con Django."
 >
   <Navbar />
 
