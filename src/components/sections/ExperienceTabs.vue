@@ -123,18 +123,6 @@ const tabs: {
       { name: "Scripts de automatización", icon: iconScript.path },
     ],
   },
-  {
-    id: "exp5",
-    title: "Formación",
-    subtitle: "Aprendizaje continuo",
-    role: "Crecimiento profesional",
-    items: [
-      "Buenas prácticas de desarrollo y código limpio.",
-      "Arquitectura frontend moderna y escalable.",
-      "Aprendizaje continuo de tecnologías actuales.",
-    ],
-    tools: [],
-  },
 ];
 
 const activeId = ref(tabs[0].id);
