@@ -1,53 +1,68 @@
 ---
-// Resumen de "Sobre mí" para el inicio; la versión completa está en /about.
+import { url } from "@/utils/url";
+// Resumen de "Sobre Matías" para el inicio; la versión completa está en /about.
+import fs from "node:fs";
+import path from "node:path";
 import VerticalLine from "@/components/ui/VerticalLine.astro";
+
+// La foto y la barra solo aparecen si existe public/profile.png.
+// Mientras no esté, el texto ocupa todo el ancho en vez de mostrar una imagen rota.
+const tieneFoto = fs.existsSync(path.join(process.cwd(), "public", "profile.png"));
 ---
 
 <section
-  class="reveal max-w-6xl mx-auto px-6 pt-8 pb-24 md:py-24 grid grid-cols-1 md:grid-cols-[1.2fr_auto_0.8fr] gap-16 items-center"
+  class:list={[
+    "reveal max-w-6xl mx-auto px-6 pt-4 pb-12 md:py-12 grid grid-cols-1 gap-16 items-center",
+    tieneFoto && "md:grid-cols-[1.2fr_auto_0.8fr]",
+  ]}
 >
   <!-- TEXTO -->
-  <div class="space-y-5 text-left md:text-justify leading-relaxed text-gray-300">
+  <div class="space-y-4 text-left md:text-justify leading-relaxed text-gray-300">
     <h2 class="text-2xl font-semibold text-purple-400">
-      Sobre mí
+      Sobre Matías
     </h2>
 
     <p>
-      Ingeniero Civil en Informática titulado en la Universidad Andrés Bello
-      con distinción Cum Laude.
+      Ingeniero Civil en Informática titulado con distinción Cum Laude en la
+      Universidad Andrés Bello, con casi 3 años de experiencia en desarrollo
+      SAP Fiori, integraciones y QA.
     </p>
 
     <p>
-      Apasionado por el aprendizaje, nuevas tecnologías y el trabajo en
-      equipo. Se destaca por ser tenaz, disciplinado, proactivo y
-      autodidacta.
+      Se destaca por ser tenaz, disciplinado, proactivo y autodidacta, y
+      disfruta construir soluciones con código simple y mantenible.
     </p>
 
     <p>
-      En desarrollo, enfocado en interfaces limpias, accesibles y bien
-      estructuradas, con atención al diseño y la experiencia de usuario.
+      Actualmente busca oportunidades para aportar en desarrollo de software
+      y QA.
     </p>
 
-    <p>
-      Disfruta trabajar con tecnologías modernas, aprender continuamente y
-      mejorar soluciones mediante código simple y mantenible.
-    </p>
-
-    <p>
-      Actualmente busca oportunidades para aportar, crecer profesionalmente
-      y perfeccionar sus habilidades como desarrollador.
-    </p>
+    <!-- Enlace a la versión completa -->
+    <a
+      href={url("/about")}
+      class="inline-block pt-2
+             text-sm font-semibold
+             text-purple-300
+             hover:text-purple-400 hover:underline"
+    >
+      Conoce más sobre Matías →
+    </a>
   </div>
 
-  <!-- BARRA (separa el texto de la foto) -->
-  <VerticalLine />
+  {tieneFoto && (
+    <>
+      <!-- BARRA (separa el texto de la foto) -->
+      <VerticalLine />
 
-  <!-- IMAGEN -->
-  <div class="flex justify-center">
-    <img
-      src="/profile.png"
-      alt="Foto de Matías Espinoza"
-      class="w-64 h-64 object-cover rounded-2xl shadow-lg shadow-black/30"
-    />
-  </div>
+      <!-- IMAGEN -->
+      <div class="flex justify-center">
+        <img
+          src={url("/profile.png")}
+          alt="Foto de Matías Espinoza"
+          class="w-64 h-64 object-cover rounded-2xl shadow-lg shadow-black/30"
+        />
+      </div>
+    </>
+  )}
 </section>

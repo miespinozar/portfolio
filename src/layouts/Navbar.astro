@@ -1,22 +1,24 @@
 ---
+import { url, sinBase } from "@/utils/url";
 // Links del menú: para agregar uno, suma un objeto aquí.
 // Se usan dos veces: en la barra (pantallas grandes) y en el menú del celular.
 const links = [
-  { href: "/about", label: "Sobre mí" },
+  { href: "/about", label: "Sobre Matías" },
   { href: "/projects", label: "Proyectos" },
-  { href: "/contact", label: "Contáctame" },
+  { href: "/contact", label: "Contacto" },
 ];
 
-// Página actual, sin la barra final ("/about/" y "/about" cuentan como la misma).
-// Sirve para dejar marcado en el menú el link de la página en la que estás.
-const paginaActual = Astro.url.pathname.replace(/\/$/, "") || "/";
+// Página actual, sin la base de publicación ni la barra final
+// ("/portfolio/about/" queda como "/about"). Sirve para dejar marcado
+// en el menú el link de la página en la que estás.
+const paginaActual = sinBase(Astro.url.pathname);
 ---
 
 <nav class="bg-[#0f0f14] fixed top-0 left-0 w-full z-50">
   <!-- Barra -->
   <div class="max-w-6xl mx-auto px-8 py-4 flex items-center justify-between">
     <!-- Nombre -->
-    <a href="/" class="text-white font-semibold text-lg whitespace-nowrap">
+    <a href={url("/")} class="text-white font-semibold text-lg whitespace-nowrap">
       <span class="text-gray-200 font-bold text-lg">
         Matías Espinoza
       </span>
@@ -26,7 +28,7 @@ const paginaActual = Astro.url.pathname.replace(/\/$/, "") || "/";
     <div class="hidden md:flex gap-8 items-center text-sm">
       {links.map((link) => (
         <a
-          href={link.href}
+          href={url(link.href)}
           aria-current={paginaActual === link.href ? "page" : undefined}
           class:list={[
             `relative whitespace-nowrap
@@ -103,7 +105,7 @@ const paginaActual = Astro.url.pathname.replace(/\/$/, "") || "/";
   >
     {links.map((link) => (
       <a
-        href={link.href}
+        href={url(link.href)}
         aria-current={paginaActual === link.href ? "page" : undefined}
         class:list={[
           `block

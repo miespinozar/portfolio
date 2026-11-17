@@ -1,0 +1,42 @@
+# Publica el sitio en GitHub Pages cada vez que algo entra a main.
+# Para que funcione, en el repo: Settings → Pages → Source: "GitHub Actions".
+name: Publicar en GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Permite lanzarlo a mano desde la pestaña Actions
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Si llegan dos pushes seguidos, el segundo espera a que termine el primero
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # Compila el sitio con Astro
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bajar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar y compilar
+        uses: withastro/action@v3
+
+  # Sube lo compilado a GitHub Pages
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4
