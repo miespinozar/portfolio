@@ -1,6 +1,30 @@
 ---
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import ServiceCard from "@/components/ui/ServiceCard.astro";
+import {
+  siSelenium,
+  siCypress,
+  siPostman,
+  siJunit5,
+  siOpenjdk,
+  siSpringboot,
+  siSap,
+  siMysql,
+  siPostgresql,
+  siSqlite,
+  siJira,
+  siZoho,
+  siPython,
+  siJupyter,
+  siPandas,
+} from "simple-icons";
+import {
+  siApacheCamel,
+  siServiceNow,
+  siSqlServer,
+  iconScrum,
+  iconKanban,
+} from "@/data/extra-icons";
 
 interface Props {
   line?: "left" | "right";
@@ -10,37 +34,63 @@ const { line = "left" } = Astro.props;
 
 const areas = [
   {
-    icon: "🧪",
+    logos: [
+      { name: "Selenium", path: siSelenium.path },
+      { name: "Cypress", path: siCypress.path },
+      { name: "Postman", path: siPostman.path },
+      { name: "JUnit", path: siJunit5.path },
+    ],
     title: "QA y testing",
     description:
       "Pruebas manuales y automatizadas con JUnit, Selenium WebDriver, Postman y Cypress, apoyadas en conocimientos de desarrollo.",
   },
   {
-    icon: "🔗",
+    logos: [
+      { name: "Java", path: siOpenjdk.path },
+      { name: "Spring Boot", path: siSpringboot.path },
+      { name: "Apache Camel", path: siApacheCamel.path, viewBox: siApacheCamel.viewBox },
+      { name: "SAP", path: siSap.path },
+    ],
     title: "Integración y back end",
     description:
       "SAP Fiori, SAP CPI, Spring Boot, Apache Camel, Django y microservicios.",
   },
   {
-    icon: "🗄️",
+    logos: [
+      { name: "MySQL", path: siMysql.path },
+      { name: "PostgreSQL", path: siPostgresql.path },
+      { name: "SQLite", path: siSqlite.path },
+      { name: "SQL Server", path: siSqlServer.path, viewBox: siSqlServer.viewBox },
+    ],
     title: "Bases de datos",
     description:
       "MySQL, PostgreSQL, SQLite, SQL Server y optimización de consultas SQL.",
   },
   {
-    icon: "🔄",
+    logos: [
+      { name: "Scrum", path: iconScrum.path },
+      { name: "Kanban", path: iconKanban.path },
+      { name: "Jira", path: siJira.path },
+    ],
     title: "Metodologías ágiles",
     description:
       "Experiencia en equipos bajo Scrum y Kanban, incluyendo la coordinación de reuniones diarias.",
   },
   {
-    icon: "🎧",
+    logos: [
+      { name: "ServiceNow", path: siServiceNow.path, viewBox: siServiceNow.viewBox },
+      { name: "Zoho Helpdesk", path: siZoho.path },
+    ],
     title: "Soporte a usuarios",
     description:
       "Gestión de incidentes y requerimientos con ServiceNow y Zoho Helpdesk.",
   },
   {
-    icon: "💡",
+    logos: [
+      { name: "Python", path: siPython.path },
+      { name: "Jupyter", path: siJupyter.path },
+      { name: "pandas", path: siPandas.path },
+    ],
     title: "Intereses",
     description:
       "Desarrollo de software, QA, ciencia de datos e inteligencia artificial.",
@@ -57,7 +107,7 @@ const areas = [
   <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12 w-full">
     {areas.map((area) => (
       <ServiceCard
-        icon={area.icon}
+        logos={area.logos}
         title={area.title}
         description={area.description}
       />
