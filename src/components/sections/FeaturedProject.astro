@@ -1,0 +1,100 @@
+---
+// Proyecto destacado del inicio: una versión corta de Nimbo,
+// con botones a su repositorio y a la página de proyectos.
+import Card from "@/components/ui/Card.astro";
+import Button from "@/components/ui/Button.astro";
+import {
+  siTauri,
+  siVuedotjs,
+  siTypescript,
+  siRust,
+  siSqlite,
+  siTailwindcss,
+} from "simple-icons";
+
+const tecnologias = [
+  { name: "Tauri", icon: siTauri.path },
+  { name: "Vue 3", icon: siVuedotjs.path },
+  { name: "TypeScript", icon: siTypescript.path },
+  { name: "Rust", icon: siRust.path },
+  { name: "SQLite", icon: siSqlite.path },
+  { name: "Tailwind CSS", icon: siTailwindcss.path },
+];
+---
+
+<section class="reveal max-w-6xl mx-auto px-6 pb-16 md:pb-20">
+  <!-- Título -->
+  <h2 class="text-2xl font-semibold text-purple-400 mb-8">
+    Proyecto destacado
+  </h2>
+
+  <Card
+    class={`w-full p-8 md:p-10
+            border-purple-500/40
+            hover:border-purple-400`}
+  >
+    <!-- Encabezado: nombre y estado -->
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4">
+      <!-- Nombre -->
+      <h3 class="text-2xl md:text-3xl font-bold text-white">
+        Nimbo
+      </h3>
+
+      <!-- Estado -->
+      <span
+        class="px-3 py-1
+               rounded-full
+               text-xs font-semibold
+               text-cyan-300
+               bg-cyan-500/10
+               border border-cyan-400/30"
+      >
+        En desarrollo
+      </span>
+    </div>
+
+    <!-- Resumen -->
+    <p class="max-w-3xl text-gray-300 leading-relaxed mb-6">
+      Cliente de escritorio para nube personal, al estilo de Google Drive,
+      conectado a OneDrive. Inicio de sesión seguro con Microsoft,
+      sincronización de carpetas y versiones para Windows y Linux.
+    </p>
+
+    <!-- Tecnologías (logos) -->
+    <ul class="flex flex-wrap items-center gap-5 mb-8">
+      {tecnologias.map((tec) => (
+        <li title={tec.name}>
+          <svg
+            viewBox="0 0 24 24"
+            class="w-7 h-7 fill-current text-purple-300"
+            role="img"
+            aria-label={tec.name}
+          >
+            <path d={tec.icon} />
+          </svg>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Botones -->
+    <div class="flex flex-wrap gap-4">
+      <Button href="https://gitlab.com/matias.espinoza.rojas/nimbo" newTab>
+        Ver en GitLab
+      </Button>
+
+      <a
+        href="/projects"
+        class="inline-block px-6 py-3
+               rounded-xl
+               font-semibold text-purple-200
+               border border-purple-500/50
+               transition-all duration-300
+               hover:bg-purple-500/10
+               hover:border-purple-400
+               hover:-translate-y-0.5"
+      >
+        Ver todos los proyectos
+      </a>
+    </div>
+  </Card>
+</section>

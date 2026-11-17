@@ -1,0 +1,56 @@
+---
+// Tecnologías principales para el inicio: unas pocas, las más fuertes.
+// La lista completa está en el carrusel de /about.
+import TechCard from "@/components/ui/TechCard.astro";
+import {
+  siOpenjdk,
+  siSpringboot,
+  siSap,
+  siSelenium,
+  siCypress,
+  siPostman,
+  siPython,
+  siVuedotjs,
+} from "simple-icons";
+
+const techs = [
+  { name: "Java", icon: siOpenjdk.path },
+  { name: "Spring Boot", icon: siSpringboot.path },
+  { name: "SAP Fiori / CPI", icon: siSap.path },
+  { name: "Selenium", icon: siSelenium.path },
+  { name: "Cypress", icon: siCypress.path },
+  { name: "Postman", icon: siPostman.path },
+  { name: "Python", icon: siPython.path },
+  { name: "Vue.js", icon: siVuedotjs.path },
+];
+---
+
+<section class="reveal max-w-6xl mx-auto px-6 pb-24">
+  <!-- Título -->
+  <h2 class="text-2xl font-semibold text-purple-400 mb-8">
+    Tecnologías principales
+  </h2>
+
+  <!-- Tarjetas -->
+  <ul class="flex flex-wrap gap-4">
+    {techs.map((tech) => (
+      <li>
+        <TechCard
+          name={tech.name}
+          icon={tech.icon}
+        />
+      </li>
+    ))}
+  </ul>
+
+  <!-- Enlace al stack completo -->
+  <a
+    href="/about"
+    class="inline-block mt-8
+           text-sm font-semibold
+           text-purple-300
+           hover:text-purple-400 hover:underline"
+  >
+    Ver experiencia y stack completo →
+  </a>
+</section>

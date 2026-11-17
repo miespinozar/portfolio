@@ -4,6 +4,8 @@ import Navbar from "@/layouts/Navbar.astro";
 import Footer from "@/layouts/Footer.astro";
 import HomeHero from "@/components/sections/HomeHero.astro";
 import AboutSummary from "@/components/sections/AboutSummary.astro";
+import FeaturedProject from "@/components/sections/FeaturedProject.astro";
+import KeyTech from "@/components/sections/KeyTech.astro";
 ---
 
 <BaseLayout>
@@ -12,8 +14,14 @@ import AboutSummary from "@/components/sections/AboutSummary.astro";
   <!-- Presentación -->
   <HomeHero />
 
-  <!-- Resumen de "Sobre mí" -->
+  <!-- Resumen de "Sobre Matías" -->
   <AboutSummary />
+
+  <!-- Nimbo, el proyecto principal -->
+  <FeaturedProject />
+
+  <!-- Las tecnologías más fuertes -->
+  <KeyTech />
 
   <Footer />
 </BaseLayout>
