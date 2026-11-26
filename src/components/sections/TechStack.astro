@@ -1,6 +1,7 @@
 ---
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import TechCard from "@/components/ui/TechCard.astro";
+import PauseButton from "@/components/ui/PauseButton.astro";
 import {
   siPython,
   siOpenjdk,
@@ -90,8 +91,13 @@ const loop = [...techs, ...techs];
     limpias y mantenibles.
   </p>
 
+  <!-- Pausar el carrusel (desde el teclado o el celular no se puede pasar el mouse) -->
+  <div class="flex justify-end mb-3">
+    <PauseButton />
+  </div>
+
   <!-- Carrusel -->
-  <div class="tech-strip overflow-hidden py-2" aria-label="Tecnologías">
+  <div class="tech-strip overflow-hidden py-2" role="region" aria-label="Tecnologías">
     <ul class="tech-track flex gap-5 w-max">
       {loop.map((tech, i) => (
         <li aria-hidden={i >= techs.length ? "true" : undefined}>

@@ -2,7 +2,7 @@
 // Pestañas de experiencia: a la izquierda los cargos, a la derecha el detalle del elegido.
 // El título de la sección lo pone Experience.astro.
 // Los textos y las herramientas son los mismos del CV.
-import { computed, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import {
   siSap,
   siJavascript,
@@ -126,41 +126,88 @@ const tabs: {
 ];
 
 const activeId = ref(tabs[0].id);
-const active = computed(() => tabs.find((t) => t.id === activeId.value)!);
 
-// Carrusel de herramientas del cargo elegido.
+// Carrusel de herramientas de cada cargo.
 // La lista se repite hasta tener al menos 10 tarjetas, para que un cargo con pocas
 // herramientas igual llene el ancho. Luego va dos veces seguidas: cuando la primera
 // mitad termina de pasar, la animación vuelve al inicio sin que se note el salto.
-const toolsBase = computed(() => {
-  const tools = active.value.tools;
-  if (!tools.length) {
-    return [];
-  }
-
-  const base: Tool[] = [];
-  while (base.length < 10) {
-    base.push(...tools);
-  }
-  return base;
-});
-
-const toolsLoop = computed(() => [...toolsBase.value, ...toolsBase.value]);
-
 // Más tarjetas, más tiempo: así todas avanzan a la misma velocidad.
-const toolsDuration = computed(() => `${toolsBase.value.length * 3}s`);
+const carousels = Object.fromEntries(
+  tabs.map((tab) => {
+    const base: Tool[] = [];
+    while (tab.tools.length && base.length < 10) {
+      base.push(...tab.tools);
+    }
+    return [tab.id, { loop: [...base, ...base], duration: `${base.length * 3}s` }];
+  }),
+);
+
+// ---- Cargos ocultos, pero que se pueden encontrar ----
+// Vue escribe `hidden` a secas en el HTML (oculto también sin JavaScript). Ya en el
+// navegador se cambia a hidden="until-found": siguen ocultos, pero "Buscar en la página"
+// los encuentra y abre su pestaña (evento beforematch). Donde until-found no existe,
+// el navegador lo trata como un hidden normal.
+const panels = ref<HTMLElement[]>([]);
+
+function allowFindInPage() {
+  panels.value.forEach((panel, i) => {
+    if (panel && tabs[i].id !== activeId.value) {
+      panel.setAttribute("hidden", "until-found");
+    }
+  });
+}
+
+onMounted(allowFindInPage);
+// `post`: después de que Vue actualizó los paneles al cambiar de pestaña.
+watch(activeId, allowFindInPage, { flush: "post" });
+
+// ---- Teclado: como las pestañas de cualquier programa ----
+// Solo la pestaña elegida entra con Tab; las flechas cambian de pestaña
+// (arriba/abajo porque están una sobre otra; izquierda/derecha también sirven).
+const tabButtons = ref<HTMLButtonElement[]>([]);
+
+function select(index: number) {
+  const i = (index + tabs.length) % tabs.length;
+  activeId.value = tabs[i].id;
+  tabButtons.value[i]?.focus();
+}
+
+function onKey(event: KeyboardEvent, index: number) {
+  const keys: Record<string, number> = {
+    ArrowDown: index + 1,
+    ArrowRight: index + 1,
+    ArrowUp: index - 1,
+    ArrowLeft: index - 1,
+    Home: 0,
+    End: tabs.length - 1,
+  };
+  if (!(event.key in keys)) {
+    return;
+  }
+  event.preventDefault();
+  select(keys[event.key]);
+}
 </script>
 
 <template>
   <!-- Layout -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-    <!-- Tabs -->
-    <div class="space-y-4">
+    <!-- Pestañas: una por cargo. La elegida se marca con el borde izquierdo (no solo
+         con color) y con aria-selected, para que el lector de pantalla también lo diga. -->
+    <div role="tablist" aria-label="Cargos" aria-orientation="vertical" class="space-y-4">
       <button
-        v-for="tab in tabs"
+        v-for="(tab, index) in tabs"
         :key="tab.id"
+        :ref="(el) => (tabButtons[index] = el as HTMLButtonElement)"
+        :id="`tab-${tab.id}`"
+        type="button"
+        role="tab"
+        :aria-selected="activeId === tab.id ? 'true' : 'false'"
+        :tabindex="activeId === tab.id ? 0 : -1"
         @click="activeId = tab.id"
-        class="w-full text-left px-4 py-3 rounded-xl transition-all duration-300"
+        @keydown="onKey($event, index)"
+        class="w-full text-left px-4 py-3 rounded-xl transition-all duration-300
+               focus-visible:outline-2 focus-visible:outline-[#a78bfa]"
         :class="
           activeId === tab.id
             ? 'bg-purple-500/10 text-white shadow-lg shadow-purple-500/20 border-l-4 border-purple-400'
@@ -171,49 +218,89 @@ const toolsDuration = computed(() => `${toolsBase.value.length * 3}s`);
       </button>
     </div>
 
-    <!-- Contenido -->
+    <!-- Contenido: todos los cargos van en la página (así Google y "Buscar en la página"
+         los encuentran), pero solo se ve el elegido. Los demás quedan ocultos con
+         hidden="until-found": si buscas una palabra que está en otro cargo, el
+         navegador abre esa pestaña solo (evento beforematch). -->
     <div class="md:col-span-2 min-w-0">
-      <transition name="fade-slide" mode="out-in">
-        <div :key="activeId" class="space-y-6">
+      <div
+        v-for="(tab, index) in tabs"
+        :key="tab.id"
+        :id="`panel-${tab.id}`"
+        role="tabpanel"
+        :aria-labelledby="`tab-${tab.id}`"
+        :ref="(el) => (panels[index] = el as HTMLElement)"
+        :hidden="activeId !== tab.id"
+        class="panel"
+        @beforematch="activeId = tab.id"
+      >
+        <!-- Los espacios van en este div interno: un panel oculto con until-found
+             igual dibuja su propio margen o relleno. -->
+        <div class="space-y-6">
           <!-- Rol -->
           <h3 class="text-white text-2xl font-semibold">
-            {{ active.role }}
+            {{ tab.role }}
           </h3>
 
           <!-- Subtitulo -->
           <p class="text-gray-400">
-            {{ active.subtitle }}
+            {{ tab.subtitle }}
           </p>
 
           <!-- Lista -->
           <ul class="space-y-1">
             <li
-              v-for="(item, i) in active.items"
+              v-for="(item, i) in tab.items"
               :key="i"
               class="text-gray-300 flex gap-2 leading-relaxed text-left md:text-justify"
             >
-              <span class="text-purple-400 leading-relaxed">•</span>
+              <span class="text-purple-400 leading-relaxed" aria-hidden="true">•</span>
               <span>{{ item }}</span>
             </li>
           </ul>
 
           <!-- Herramientas (carrusel) -->
-          <div v-if="active.tools.length" class="pt-2">
-            <!-- Título -->
-            <p class="text-sm font-semibold text-gray-400 mb-3">
-              Herramientas utilizadas
-            </p>
+          <div v-if="tab.tools.length" class="pt-2">
+            <!-- Título y botón para pausar -->
+            <div class="flex items-center justify-between gap-4 mb-3">
+              <p class="text-sm font-semibold text-gray-400">
+                Herramientas utilizadas
+              </p>
 
-            <!-- Carrusel: avanza solo y se pausa con el mouse encima -->
-            <div class="tech-strip overflow-hidden py-2" aria-label="Herramientas utilizadas">
+              <!-- Mismo HTML que PauseButton.astro (lo hace funcionar BaseLayout) -->
+              <button
+                type="button"
+                data-pausar
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg
+                       text-xs font-semibold text-gray-300 border border-white/10
+                       hover:bg-white/10 hover:text-white
+                       focus-visible:outline-2 focus-visible:outline-[#a78bfa]"
+              >
+                <span class="si-anda inline-flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M7 5h3v14H7zM14 5h3v14h-3z" />
+                  </svg>
+                  Pausar animación
+                </span>
+                <span class="si-pausada inline-flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                  Reanudar animación
+                </span>
+              </button>
+            </div>
+
+            <!-- Carrusel: avanza solo y se pausa con el mouse encima o con el botón -->
+            <div class="tech-strip overflow-hidden py-2" role="region" :aria-label="`Herramientas: ${tab.role}`">
               <ul
                 class="tech-track flex gap-5 w-max"
-                :style="{ animationDuration: toolsDuration }"
+                :style="{ animationDuration: carousels[tab.id].duration }"
               >
                 <li
-                  v-for="(tool, i) in toolsLoop"
+                  v-for="(tool, i) in carousels[tab.id].loop"
                   :key="i"
-                  :aria-hidden="i >= active.tools.length ? 'true' : undefined"
+                  :aria-hidden="i >= tab.tools.length ? 'true' : undefined"
                 >
                   <!-- Tarjeta (mismo estilo que TechCard) -->
                   <div
@@ -246,25 +333,28 @@ const toolsDuration = computed(() => `${toolsBase.value.length * 3}s`);
             </div>
           </div>
         </div>
-      </transition>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Al cambiar de pestaña, el detalle sale hacia arriba y el nuevo entra desde abajo. */
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-  transition: all 0.35s ease;
+/* Al cambiar de pestaña, el detalle nuevo entra desde un poco más abajo. */
+.panel:not([hidden]) {
+  animation: panel-in 0.35s ease;
 }
 
-.fade-slide-enter-from {
-  opacity: 0;
-  transform: translateY(10px);
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 }
 
-.fade-slide-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
+/* Quien pide menos movimiento ve el cambio de pestaña al instante. */
+@media (prefers-reduced-motion: reduce) {
+  .panel:not([hidden]) {
+    animation: none;
+  }
 }
 </style>

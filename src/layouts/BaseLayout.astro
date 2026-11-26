@@ -36,6 +36,20 @@ const imagen = new URL(url("/og-image.png"), Astro.site).href;
     <link rel="icon" type="image/svg+xml" href={url("/favicon.svg")} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- El sitio es oscuro: así el navegador también pinta oscuras sus barras de
+         desplazamiento y su fondo mientras carga (se nota sobre todo en Firefox). -->
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Si en otra página pausaste las animaciones, siguen pausadas desde el primer
+         cuadro (ver el botón "Pausar" de los carruseles, abajo). -->
+    <script is:inline>
+      try {
+        if (localStorage.getItem("animaciones") === "pausadas") {
+          document.documentElement.setAttribute("data-animaciones-pausadas", "");
+        }
+      } catch {}
+    </script>
+
     <!-- Título y descripción: lo que muestra Google -->
     <title>{tituloCompleto}</title>
     <meta name="description" content={description} />
@@ -65,6 +79,11 @@ const imagen = new URL(url("/og-image.png"), Astro.site).href;
           opacity: 1 !important;
           transform: none !important;
         }
+
+        /* El botón de pausa necesita JavaScript; sin él no se muestra. */
+        [data-pausar] {
+          display: none !important;
+        }
       </style>
     </noscript>
   </head>
@@ -74,9 +93,43 @@ const imagen = new URL(url("/og-image.png"), Astro.site).href;
   text-gray-200
   bg-[radial-gradient(ellipse_at_top,_#1e293b,_#020617)]
 ">
-
+    <!-- Primer elemento con Tab: salta el menú y va directo al contenido de la página.
+         Se ve solo al enfocarlo. Cada página pone id="contenido" en su <main>. -->
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only
+             focus:fixed focus:top-3 focus:left-3 focus:z-[60]
+             focus:px-4 focus:py-2 focus:rounded-lg
+             focus:bg-purple-600 focus:text-white focus:font-semibold"
+    >
+      Saltar al contenido
+    </a>
 
     <slot />
+
+    <script>
+      // Botón "Pausar" de los carruseles (TechStack y las pestañas de Experiencia).
+      // Pausa todas las animaciones del sitio a la vez y lo recuerda entre páginas.
+      // El texto del botón (Pausar / Reanudar) lo cambia el CSS según el atributo de <html>.
+      document.addEventListener("click", (evento) => {
+        const boton = (evento.target as Element | null)?.closest("[data-pausar]");
+        if (!boton) {
+          return;
+        }
+
+        const raiz = document.documentElement;
+        const pausadas = !raiz.hasAttribute("data-animaciones-pausadas");
+        raiz.toggleAttribute("data-animaciones-pausadas", pausadas);
+
+        try {
+          if (pausadas) {
+            localStorage.setItem("animaciones", "pausadas");
+          } else {
+            localStorage.removeItem("animaciones");
+          }
+        } catch {}
+      });
+    </script>
 
     <script>
       // Animación de aparición: cada elemento con la clase `reveal`

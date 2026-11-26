@@ -7,6 +7,14 @@
   --font-sans: "Onest Variable", ui-sans-serif, system-ui, sans-serif;
 }
 
+html {
+  /* Sitio oscuro: barras de desplazamiento y controles del navegador también oscuros. */
+  color-scheme: dark;
+  /* La barra de navegación es fija: sin esto, al saltar a una sección o al recorrer la
+     página con Tab hacia atrás, lo enfocado quedaba escondido debajo de ella. */
+  scroll-padding-top: 5rem;
+}
+
 /* Efectos propios del portafolio (Tailwind no los trae). */
 
 .text-glow {
@@ -42,8 +50,17 @@
   animation: tech-scroll 50s linear infinite;
 }
 
-.tech-strip:hover .tech-track {
+.tech-strip:hover .tech-track,
+[data-animaciones-pausadas] .tech-track {
   animation-play-state: paused;
+}
+
+/* Botón "Pausar" de los carruseles: con el mouse se pausan solos, pero desde el
+   teclado o el celular hace falta un botón (lo que se mueve más de 5 s se tiene que
+   poder detener). El texto cambia según si las animaciones están pausadas. */
+[data-animaciones-pausadas] [data-pausar] .si-anda,
+:root:not([data-animaciones-pausadas]) [data-pausar] .si-pausada {
+  display: none;
 }
 
 /* Llega justo a la mitad: ahí empieza la copia de la lista. El 10px es la mitad del gap. */
@@ -61,6 +78,11 @@
 
   .tech-track {
     animation: none;
+  }
+
+  /* Ya no se mueve nada: el botón de pausa sobra. */
+  [data-pausar] {
+    display: none;
   }
 
   /* Sin animación de aparición: todo se ve desde el principio. */
