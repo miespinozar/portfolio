@@ -20,7 +20,7 @@ const { href, newTab = false } = Astro.props;
          transition-all duration-300
          hover:bg-purple-500
          hover:shadow-lg hover:shadow-purple-500/30
-         hover:-translate-y-0.5"
+         motion-safe:hover:-translate-y-0.5"
 >
   <slot />
 </a>

@@ -1,0 +1,33 @@
+---
+// Botón para pausar y reanudar los carruseles que avanzan solos.
+// Lo hace funcionar BaseLayout (un solo script para todo el sitio) y el texto
+// "Pausar" / "Reanudar" lo cambia global.css. Las pestañas de Experiencia (Vue)
+// tienen una copia de este mismo HTML.
+---
+
+<button
+  type="button"
+  data-pausar
+  class="inline-flex items-center gap-1.5
+         px-3 py-1.5 rounded-lg
+         text-xs font-semibold text-gray-300
+         border border-white/10
+         hover:bg-white/10 hover:text-white
+         focus-visible:outline-2 focus-visible:outline-[#a78bfa]"
+>
+  <!-- Animaciones andando: ofrece pausar -->
+  <span class="si-anda inline-flex items-center gap-1.5">
+    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M7 5h3v14H7zM14 5h3v14h-3z" />
+    </svg>
+    Pausar animación
+  </span>
+
+  <!-- Animaciones pausadas: ofrece reanudar -->
+  <span class="si-pausada inline-flex items-center gap-1.5">
+    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+    Reanudar animación
+  </span>
+</button>
